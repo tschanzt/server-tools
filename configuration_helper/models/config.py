@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2014 David BEAL Akretion
 # © 2016 Yannick Vaucher (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -30,14 +29,14 @@ class AbstractConfigSettings(models.AbstractModel):
         return True
 
     @api.model
-    def _setup_base(self, partial):
+    def _setup_base(self):
         cls = type(self)
-        super(AbstractConfigSettings, self)._setup_base(partial)
+        super(AbstractConfigSettings, self)._setup_base()
         if not self._companyObject:
             return
         if cls._setup_extra_done:
             return
-        for field_key in cls._companyObject.__dict__.keys():
+        for field_key in list(cls._companyObject.__dict__.keys()):
             field = cls._companyObject.__dict__[field_key]
             if isinstance(field, fields.Field):
                 # allows to exclude some field
