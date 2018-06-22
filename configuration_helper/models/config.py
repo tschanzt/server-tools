@@ -30,13 +30,14 @@ class AbstractConfigSettings(models.AbstractModel):
 
     @api.model
     def _setup_base(self):
+        import pdb; pdb.set_trace()
         cls = type(self)
         super(AbstractConfigSettings, self)._setup_base()
-        if not self._companyObject:
+        if not cls._companyObject:
             return
         if cls._setup_extra_done:
             return
-        for field_key in list(cls._companyObject.__dict__.keys()):
+        for field_key in cls._companyObject.__dict__.keys():
             field = cls._companyObject.__dict__[field_key]
             if isinstance(field, fields.Field):
                 # allows to exclude some field
